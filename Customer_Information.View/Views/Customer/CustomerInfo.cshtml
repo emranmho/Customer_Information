@@ -1,0 +1,157 @@
+﻿@model Customer_Information.View.Models.ViewModel.CustomerDtoVM
+
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <table id="tblData" class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Customer Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var item in Model.Customerlist)
+                    {
+                        <tr>
+                            <td>
+                                <input type="text" value="@item.CustomerName" readonly/>
+                            </td>
+                            <td>
+                                <a asp-action="CustomerInfo" asp-route-customerId="@item.Id">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-1">
+
+        </div>
+        <div class="col-8">
+            <form method="post" asp-action="CustomerInfoUpsert" enctype="multipart/form-data">
+                <input asp-for="Customer.Id" hidden/>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="p-2">
+                            <ul class="list-group list-group-horizontal-sm">
+                                <button type="submit" name="action" value="edit">
+                                    <li class="list-group-item">Edit</li>
+                                </button>
+                                <button type="submit" name="action" value="add">
+                                    <li class="list-group-item">Add</li>
+                                </button>
+                                <button type="submit" name="action" value="delete">
+                                <li class="list-group-item">Delete</li>
+                                </button>
+                                <button>
+                                    <li class="list-group-item">Cancel</li>
+                                </button>
+                            </ul>
+                        </div>
+                        <div class="p-2"></div>
+                        <div class="row">
+                            <div class="col-12 col-lg-8 pb-3">
+                                <div class="row">
+                                    <div class="col-3">Name</div>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control" asp-for="Customer.CustomerName" autocomplete="off" />
+                                        <span asp-validation-for="Customer.CustomerName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">Father Name</div>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control" asp-for="Customer.FatherName" />
+                                        <span asp-validation-for="Customer.FatherName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">Mother Name</div>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control" asp-for="Customer.MotherName" />
+                                        <span asp-validation-for="Customer.MotherName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">Marital Status</div>
+                                    <div class="col-9">
+                                        <div class="form-check">
+                                            <input type="radio" asp-for="Customer.MeritialStatus" class="form-check-input" id="radio1" name="optradio" value="0">Single
+                                            <label class="form-check-label" for="radio1"></label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="radio" asp-for="Customer.MeritialStatus" class="form-check-input" id="radio2" name="optradio" value="1">Married
+                                            <label class="form-check-label" for="radio2"></label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="radio" asp-for="Customer.MeritialStatus" class="form-check-input" id="radio2" name="optradio" value="2">Other
+                                            <label class="form-check-label" for="radio2"></label>
+                                        </div>
+                                        <span asp-validation-for="Customer.MeritialStatus" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">Country</div>
+                                    <div class="col-9">
+                                        <div class="form-group">
+                                            <select asp-for="Customer.CountryId" class="form-control" asp-items="@Model.CountryList">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    Other Information
+                                    <br />
+                                    <button class="btn btn-primary" type="submit" name="action" value="addAddress">Add</button>
+                                    <br />
+                                    <div class="col-12 col-lg-8 pb-3">
+                                        <div class="row">
+                                            <div class="col-3">Address</div>
+                                            <input asp-for="Address.Id" hidden />
+                                            <input asp-for="Address.CustomerId" hidden/>
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" asp-for="Address.Address" autocomplete="off"/>
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <ul class="list-group list-group-horizontal-sm">
+                                                <button type="submit" name="action" value="editAddress">
+                                                    <li class="list-group-item">Edit</li>
+                                                </button>
+                                                <button type="submit" name="action" value="deleteAddress">
+                                                    <li class="list-group-item">Delete</li>
+                                                </button>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+
+    }
+    <script>
+        $(document).ready(function () {
+            var maritalStatus = @Model.Customer.MeritialStatus;
+            if (maritalStatus === 0) {
+                $('#radio1').prop('checked', true);
+            } else if (maritalStatus === 1) {
+                $('#radio2').prop('checked', true);
+            } else if (maritalStatus === 2) {
+                $('#radio3').prop('checked', true);
+            }
+        });
+    </script>
+}

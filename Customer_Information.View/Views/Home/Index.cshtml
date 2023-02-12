@@ -1,0 +1,173 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <table id="tblData" class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                            <td><input type="text" /> </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-1">
+
+        </div>
+        <div class="col-8">
+            <form>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="p-2">
+                            <ul class="list-group list-group-horizontal-sm">
+                                <a href="#5">
+                                <li class="list-group-item ">Edit</li>
+                                </a>
+                                <a href="#4">
+                                <li class="list-group-item ">Save</li>
+                                </a>
+                                <a href="#3">
+                                <li class="list-group-item">Delete</li>
+                                </a>
+                                <a href="#2">
+                                <li class="list-group-item ">Cancel</li>
+                                </a>
+                            </ul>
+                        </div>
+                        <div class="p-2"></div>
+                        <div class="row">
+                            <div class="col-12 col-lg-8 pb-3">
+                                <div class="row">
+                                    <div class="col-3">Name</div>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">Father Name</div>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">Mother Name</div>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">Marital Status</div>
+                                    <div class="col-9">
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1">Male
+                                            <label class="form-check-label" for="radio1"></label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2">Female
+                                            <label class="form-check-label" for="radio2"></label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2">Other
+                                            <label class="form-check-label" for="radio2"></label>
+                                        </div>
+                                    </div>
+                                </div><div class="row my-1">
+                                    <div class="col-3">Country</div>
+                                    <div class="col-9">
+                                        <div class="form-group">
+                                            <select id="country" class="form-control">
+                                                @*@foreach (var country in Model.Countries)
+                                                {
+                                                <option value="@country.Id">@country.Name</option>
+                                                }*@
+                                            </select>
+                                            <a href="#" id="addCountry">+ Add New</a>
+                                        </div>
+
+                                        <div id="newCountryForm" style="display:none">
+                                            <div class="form-group">
+                                                <label for="newCountryName">Country Name:</label>
+                                                <input type="text" id="newCountryName" class="form-control" />
+                                            </div>
+                                            <a href="#" id="saveCountry">Save</a>
+                                            <a href="#" id="cancelCountry">Cancel</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">Photo</div>
+                                    <div class="col-9">
+                                        <input type="file" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-8 pb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                       Other Information
+                                       <br />
+                                       <button class="btn btn-primary" >Add</button>
+                                       <br />
+                                        <div class="col-12 col-lg-8 pb-3">
+                                            <div class="row">
+                                                <div class="col-3">Address</div>
+                                                <div class="col-9">
+                                                    <input type="text" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="row my-1">
+                                                <div class="col-6"><button class="btn btn-secondary">Edit</button></div>
+                                                <div class="col-6">
+                                                    <button class="btn btn-danger">Delete</button>
+                                                </div>
+                                                
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#addCountry").click(function () {
+                $("#newCountryForm").show();
+            });
+
+            $("#cancelCountry").click(function () {
+                $("#newCountryForm").hide();
+            });
+
+            $("#saveCountry").click(function () {
+                var newCountryName = $("#newCountryName").val();
+
+                // Make an AJAX request to save the new country to the database
+                $.ajax({
+                    type: "POST",
+                    url: "/Countries/Create",
+                    data: { name: newCountryName },
+                    success: function (data) {
+                        // Add the new country to the dropdown list
+                        var option = new Option(newCountryName, data.id, true, true);
+                        $("#country").append(option).trigger("change");
+
+                        // Hide the add country form
+                        $("#newCountryForm").hide();
+                    }
+                });
+            });
+        });
+    </script>
+}
