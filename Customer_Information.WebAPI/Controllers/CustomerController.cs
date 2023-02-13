@@ -111,10 +111,6 @@ namespace Customer_Information.WebAPI.Controllers
 
                 Customer customer = _mapper.Map<Customer>(obj);
                 customer.CountryId = country.Id;
-                //if (obj.CustomerPhotoFile != null)
-                //{
-                //    customer.CustomerPhoto = GetByteArrayAsync(obj.CustomerPhotoFile).Result;
-                //}
                 await _customerRepo.Create(customer);
                 _response.Result = _mapper.Map<CustomerDto>(customer);
                 _response.StatusCode = HttpStatusCode.Created;
