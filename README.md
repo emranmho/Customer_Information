@@ -11,7 +11,7 @@ Rightclick main <b>Solution</b> from solution explorer.
 Go to Set <b>Startup Projects.</b>
 Set like this.
   <div align="center">
-<img src="![12](https://user-images.githubusercontent.com/63514104/218427884-41f1084c-6859-421d-aed9-a424a0dd161b.png)" align="center" style="width: 100%" />
+<img src="https://user-images.githubusercontent.com/63514104/218427884-41f1084c-6859-421d-aed9-a424a0dd161b.png" style="width: 100%" />
 </div> 
 Finally start the project.
 
