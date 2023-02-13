@@ -23,7 +23,7 @@ Finally start the project.
 Based on .net6 MVC\
     .Service Pattern use for calling API\
     .Retrive Data Using JSON Data Serialize\
-    .Maintain Validation from userside.\
+    .Maintain Validation from userside.
 
 
 
@@ -35,4 +35,4 @@ Use
 2.Manage API response with StatusCode\
 3.Use Automapper and DTO\
 4.Build on SOLID principle\
-5.Use codefirst approch for Database\
+5.Use codefirst approch for Database
