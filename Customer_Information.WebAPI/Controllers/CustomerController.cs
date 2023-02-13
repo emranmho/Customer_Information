@@ -8,7 +8,7 @@ using System.Net;
 namespace Customer_Information.WebAPI.Controllers
 {
     [Route("api/Customer")]
-    //[ApiController]
+    [ApiController]
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerRepository _customerRepo;
