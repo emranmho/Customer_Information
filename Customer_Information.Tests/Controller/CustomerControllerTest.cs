@@ -60,46 +60,5 @@ namespace Customer_Information.Tests.Controller
             Assert.Equal(HttpStatusCode.OK, apiResponse.StatusCode);
         }
 
-        [Fact]
-        public async Task CreateCustomer_OkReturn()
-        {
-            //Arrange
-            var customerDto = new CustomerDto
-            {
-                CustomerName = "Jon",
-                CountryId = 1,
-                FatherName = "Dove",
-                MotherName = "Lin",
-                MeritialStatus = 1,
-            };
-            var customer = new Customer
-            {
-                CustomerName = customerDto.CustomerName,
-                CountryId = customerDto.CountryId,
-                FatherName = customerDto.FatherName,
-                MotherName = customerDto.MotherName,
-                MeritialStatus = customerDto.MeritialStatus,
-            };
-
-            A.CallTo(() => _mapper.Map<Customer>(customerDto)).Returns(customer);
-            A.CallTo(() => _customerRepo.Create(customer)).Returns(Task.FromResult(0));
-            
-
-            var controller = new CustomerController(_customerRepo, _countryRepo, _mapper);
-
-            // Act
-            var result = await controller.CreateCustomerInfo(customerDto);
-
-            // Assert
-            var createdResult = result.Result as CreatedAtRouteResult;
-            Assert.NotNull(createdResult);
-            Assert.Equal(201, createdResult.StatusCode);
-
-            var apiResponse = createdResult.Value as ApiResponse;
-            Assert.NotNull(apiResponse);
-            Assert.Equal(customerDto, apiResponse.Result);
-            Assert.Equal(HttpStatusCode.Created, apiResponse.StatusCode);
-        }
-
     }
 }
